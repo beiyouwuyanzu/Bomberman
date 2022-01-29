@@ -1,23 +1,28 @@
+import time
+
 class Bomb:
     frame = 0
 
-    def __init__(self, r, x, y, map, bomber):
+    def __init__(self, r, x, y, map, bomber, st = time.time()):
         self.range = r
         self.posX = x
         self.posY = y
         self.time = 3000
         self.bomber = bomber
         self.sectors = []
+        self.st = 0
         self.get_range(map)
 
     def update(self, dt):
-
         self.time = self.time - dt
-
-        if self.time < 1000:
-            self.frame = 2
-        elif self.time < 2000:
-            self.frame = 1
+        tm = int(time.time() * 1000);
+        delta = tm - self.st
+        # print("debug", delta, ( delta / 100 ) % 4)
+        self.frame = ( delta // 100 ) % 4
+        # if self.time < 1000:
+        #     self.frame = 2
+        # elif self.time < 2000:
+        #     self.frame = 1
 
     def get_range(self, map):
 

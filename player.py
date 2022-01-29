@@ -1,23 +1,37 @@
 import pygame
 import math
-
+import time
 from bomb import Bomb
 
 class Player:
-    posX = 4
-    posY = 4
+    posX = 1
+    posY = 1
     direction = 0
     frame = 0
     animation = []
     range = 3
-    bomb_limit = 1
+    bomb_limit = 6
+    allpic = None
+    width = 60
+    height = 60
+    coor_xst = 22
+    coor_yst = 40
+    # 隶属哪一个
+    tempx = 1 
+    tempy = 1
+    H = 1
+    W = 1
 
-    def __init__(self):
+
+    def __init__(self, H = 1, W = 1):
         self.life = True
+        self.H = H
+        self.W = W
+        self.load()
 
     def move(self, dx, dy, grid, enemys):
-        tempx = int(self.posX/4)
-        tempy = int(self.posY/4)
+        self.tempx = round(self.posX)
+        self.tempy = round(self.posY)
 
         map = []
 
@@ -34,41 +48,55 @@ class Player:
             else:
                 map[int(x.posX/4)][int(x.posY/4)] = 2
 
-        if self.posX % 4 != 0 and dx == 0:
-            if self.posX % 4 == 1:
-                self.posX -= 1
-            elif self.posX % 4 == 3:
-                self.posX += 1
-            return
-        if self.posY % 4 != 0 and dy == 0:
-            if self.posY % 4 == 1:
-                self.posY -= 1
-            elif self.posY % 4 == 3:
-                self.posY += 1
-            return
+        # if self.posX % 4 != 0 and dx == 0:
+        #     if self.posX % 4 == 1:
+        #         self.posX -= 1
+        #     elif self.posX % 4 == 3:
+        #         self.posX += 1
+        #     return
+        # if self.posY % 4 != 0 and dy == 0:
+        #     if self.posY % 4 == 1:
+        #         self.posY -= 1
+        #     elif self.posY % 4 == 3:
+        #         self.posY += 1
+        #     return
 
         # right
         if dx == 1:
-            if map[tempx+1][tempy] == 0:
-                self.posX += 1
+            if 0.999 > math.modf(self.posX)[0] > 0.5:
+                self.posX += 0.1
+            elif map[self.tempx + 1][self.tempy] == 0:
+                self.posX += 0.1
         # left
         elif dx == -1:
-            tempx = math.ceil(self.posX / 4)
-            if map[tempx-1][tempy] == 0:
-                self.posX -= 1
+            if 0.001 < math.modf(self.posX)[0] < 0.5:
+                # print(0 , math.modf(self.posX)[0] , 0.5)
+                self.posX -= 0.1
+            # self.tempx = math.ceil(self.posX / 4)
+            elif map[self.tempx - 1][self.tempy] == 0:
+                self.posX -= 0.1
 
         # bottom
         if dy == 1:
-            if map[tempx][tempy+1] == 0:
-                self.posY += 1
+            if 0.999 > math.modf(self.posY)[0] > 0.5:
+                # print("bottom", self.posY,  math.modf(self.posY)[0])
+                self.posY += 0.1
+            elif map[self.tempx][self.tempy + 1] == 0:
+                self.posY += 0.1
         # top
         elif dy == -1:
-            tempy = math.ceil(self.posY / 4)
-            if map[tempx][tempy-1] == 0:
-                self.posY -= 1
+
+            if 0.001 < math.modf(self.posY)[0] < 0.5:
+                # print("top", self.posY ,math.modf(self.posY)[0])
+                self.posY -= 0.1
+            if map[self.tempx][self.tempy - 1] == 0:
+                self.posY -= 0.1
+
+        self.tempx = round(self.posX)
+        self.tempy = round(self.posY)
 
     def plant_bomb(self, map):
-        b = Bomb(self.range, round(self.posX/4), round(self.posY/4), map, self)
+        b = Bomb(self.range, round(self.tempx), round(self.tempy), map, self, time.time() * 1000)
         return b
 
     def check_death(self, exp):
@@ -76,6 +104,30 @@ class Player:
             for s in e.sectors:
                 if int(self.posX/4) == s[0] and int(self.posY/4) == s[1]:
                     self.life = False
+
+    def load(self):
+        '''
+        :param self:
+        :param filename:文件路径
+        :param row:精灵序列图行数
+        :param columns:精灵序列图列数
+        :return:
+        '''
+        self.allpic = pygame.image.load("images/hero/huoying.png").convert_alpha()  # 载入整张精灵序列图
+        self.allpic_rect = self.allpic.get_rect()  # 获取图片的rect值
+        # self.frame_width = self.main_rect.width / columns  # 计算单一帧的宽度=图宽/列数
+        # self.frame_height = self.main_rect.height / row  # 计算单一帧的高度=图宽/行数
+        # self.rect = self.x + self.movex, self.y + self.movey, self.frame_width, self.frame_height  # 更新rect
+
+    def get_pic_coor(self):
+        """
+        获得当前精灵图的左下角坐标
+        """
+
+        mp = [0, 2, 3, 1]
+        fm = int(self.frame)
+        return (self.posX * self.W , self.posY * self.H) , (self.coor_xst + fm * 100, 
+            self.coor_yst + 100 * mp[self.direction], self.width, self.height )
 
     def load_animations(self, scale):
         front = []
