@@ -18,7 +18,7 @@ class Bomb:
         tm = int(time.time() * 1000);
         delta = tm - self.st
         # print("debug", delta, ( delta / 100 ) % 4)
-        self.frame = ( delta // 100 ) % 4
+        self.frame = ( delta // 200 ) % 4
         # if self.time < 1000:
         #     self.frame = 2
         # elif self.time < 2000:

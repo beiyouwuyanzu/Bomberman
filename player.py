@@ -13,9 +13,12 @@ class Player:
     bomb_limit = 6
     allpic = None
     width = 60
-    height = 60
+    hscale = 1.3
+    height = 60 * hscale
     coor_xst = 22
-    coor_yst = 40
+    coor_yst = 54
+    speed = 0.08
+    
     # 隶属哪一个
     tempx = 1 
     tempy = 1
@@ -64,33 +67,33 @@ class Player:
         # right
         if dx == 1:
             if 0.999 > math.modf(self.posX)[0] > 0.5:
-                self.posX += 0.1
+                self.posX += self.speed
             elif map[self.tempx + 1][self.tempy] == 0:
-                self.posX += 0.1
+                self.posX += self.speed
         # left
         elif dx == -1:
             if 0.001 < math.modf(self.posX)[0] < 0.5:
                 # print(0 , math.modf(self.posX)[0] , 0.5)
-                self.posX -= 0.1
+                self.posX -= self.speed
             # self.tempx = math.ceil(self.posX / 4)
             elif map[self.tempx - 1][self.tempy] == 0:
-                self.posX -= 0.1
+                self.posX -= self.speed
 
         # bottom
         if dy == 1:
             if 0.999 > math.modf(self.posY)[0] > 0.5:
                 # print("bottom", self.posY,  math.modf(self.posY)[0])
-                self.posY += 0.1
+                self.posY += self.speed
             elif map[self.tempx][self.tempy + 1] == 0:
-                self.posY += 0.1
+                self.posY += self.speed
         # top
         elif dy == -1:
 
             if 0.001 < math.modf(self.posY)[0] < 0.5:
                 # print("top", self.posY ,math.modf(self.posY)[0])
-                self.posY -= 0.1
+                self.posY -= self.speed
             if map[self.tempx][self.tempy - 1] == 0:
-                self.posY -= 0.1
+                self.posY -= self.speed
 
         self.tempx = round(self.posX)
         self.tempy = round(self.posY)
@@ -113,7 +116,10 @@ class Player:
         :param columns:精灵序列图列数
         :return:
         '''
-        self.allpic = pygame.image.load("images/hero/huoying.png").convert_alpha()  # 载入整张精灵序列图
+        allpic = pygame.image.load("images/hero/huoying.png").convert_alpha()  # 载入整张精灵序列图
+        size = (allpic.get_width(), allpic.get_height() * self.hscale)
+        self.allpic = pygame.transform.scale(allpic, size)
+        # print(self.allpic)
         self.allpic_rect = self.allpic.get_rect()  # 获取图片的rect值
         # self.frame_width = self.main_rect.width / columns  # 计算单一帧的宽度=图宽/列数
         # self.frame_height = self.main_rect.height / row  # 计算单一帧的高度=图宽/行数
@@ -126,8 +132,8 @@ class Player:
 
         mp = [0, 2, 3, 1]
         fm = int(self.frame)
-        return (self.posX * self.W , self.posY * self.H) , (self.coor_xst + fm * 100, 
-            self.coor_yst + 100 * mp[self.direction], self.width, self.height )
+        return (self.posX * self.W , self.posY * self.H - 24) , (self.coor_xst + fm * 100, 
+            self.coor_yst + 100 * self.hscale * mp[self.direction], self.width, self.height )
 
     def load_animations(self, scale):
         front = []

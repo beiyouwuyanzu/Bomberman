@@ -32,11 +32,11 @@ grid = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -137,16 +137,16 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     box_img = pygame.image.load('images/terrain/box1.png')
     box_img = pygame.transform.scale(box_img, (TILE_WIDTH, TILE_HEIGHT))
     global bomb0_img
-    bomb0_img = pygame.image.load('images/bomb/bomb1_stand_0_0.png')
+    bomb0_img = pygame.image.load('images/bomb/bomb12_stand_0_0.png')
     bomb0_img = pygame.transform.scale(bomb0_img, (TILE_WIDTH, TILE_HEIGHT))
     global bomb1_img
-    bomb1_img = pygame.image.load('images/bomb/bomb1_stand_0_1.png')
+    bomb1_img = pygame.image.load('images/bomb/bomb12_stand_0_1.png')
     bomb1_img = pygame.transform.scale(bomb1_img, (TILE_WIDTH, TILE_HEIGHT))
     global bomb2_img
-    bomb2_img = pygame.image.load('images/bomb/bomb1_stand_0_2.png')
+    bomb2_img = pygame.image.load('images/bomb/bomb12_stand_0_2.png')
     bomb2_img = pygame.transform.scale(bomb2_img, (TILE_WIDTH, TILE_HEIGHT))
     global bomb3_img
-    bomb3_img = pygame.image.load('images/bomb/bomb1_stand_0_3.png')
+    bomb3_img = pygame.image.load('images/bomb/bomb12_stand_0_3.png')
     bomb3_img = pygame.transform.scale(bomb3_img, (TILE_WIDTH, TILE_HEIGHT))
     global explosion1_img
     explosion1_img = pygame.image.load('images/explosion/1.png')
@@ -157,7 +157,7 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     global explosion3_img
     explosion3_img = pygame.image.load('images/explosion/3.png')
     explosion3_img = pygame.transform.scale(explosion3_img, (TILE_WIDTH, TILE_HEIGHT))
-    
+
     global terrain_images
     terrain_images = [grass_img, block_img, box_img, grass_img]
     global bomb_images
@@ -192,7 +192,7 @@ def draw():
             s.blit(explosion_images[y.frame], (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
     if player.life:
         s.blit(player.allpic, *player.get_pic_coor())
-        pygame.draw.rect(s, (198, 226, 255), [player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT, player.width, player.height], 1 )
+        pygame.draw.rect(s, (198, 226, 255), [player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT - 24, player.width, player.height], 1 )
         # 给当前任务画框
         pygame.draw.rect(s, (255, 250, 0, 240), [player.tempx * TILE_WIDTH, player.tempy * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT], 1 )
         
