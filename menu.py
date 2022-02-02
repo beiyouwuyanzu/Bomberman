@@ -18,9 +18,9 @@ WINDOW_SIZE = (13 * TILE_SIZE, 13 * TILE_SIZE)
 
 clock = None
 player_alg = Algorithm.PLAYER
-en1_alg = Algorithm.DIJKSTRA
-en2_alg = Algorithm.DFS
-en3_alg = Algorithm.DIJKSTRA
+en1_alg = Algorithm.NONE
+en2_alg = Algorithm.NONE
+en3_alg = Algorithm.NONE
 show_path = True
 surface = pygame.display.set_mode(WINDOW_SIZE)
 

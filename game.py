@@ -6,6 +6,7 @@ from player import Player
 from explosion import Explosion
 from enemy import Enemy
 from algorithm import Algorithm
+from spriteManager import  SpriteManager
 
 TILE_WIDTH = 40
 TILE_HEIGHT = 40
@@ -53,6 +54,11 @@ explosion1_img = None
 explosion2_img = None
 explosion3_img = None
 
+spm = None
+bomb_top = None
+
+
+
 white = (255,255,255)
 terrain_images = []
 bomb_images = []
@@ -70,6 +76,11 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     global TILE_HEIGHT
     TILE_WIDTH = scale
     TILE_HEIGHT = scale
+
+    global bomb_top
+    global spm
+    spm = SpriteManager(scale)
+    # bomb_top = spm.get("bomb_top")
 
     global font
     font = pygame.font.SysFont('Bebas', scale)
@@ -188,13 +199,23 @@ def draw():
         s.blit(bomb_images[x.frame], (x.posX * TILE_WIDTH, x.posY * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
 
     for y in explosions:
+        # for line in y.detail:
+        #     print(line)
+        # print("=" * 10)
         for x in y.sectors:
-            s.blit(explosion_images[y.frame], (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
+            # s.blit(explosion_images[y.frame], (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
+            # print(x[0], x[1])
+            # print(y.detail)
+            s.blit(spm.explore_img(y.detail[x[0]][x[1]], y.frame), (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
     if player.life:
+        # print(*player.get_pic_coor())
         s.blit(player.allpic, *player.get_pic_coor())
         pygame.draw.rect(s, (198, 226, 255), [player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT - 24, player.width, player.height], 1 )
         # 给当前任务画框
         pygame.draw.rect(s, (255, 250, 0, 240), [player.tempx * TILE_WIDTH, player.tempy * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT], 1 )
+    else:
+        # print(player.death_tm, player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT)
+        s.blit(spm.get("status", int(player.death_tm  / 300 % 5)), (player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT))
         
     # print(Player)
 
@@ -251,8 +272,10 @@ def main():
     # pygame.key.set_repeat(1,1)
     # print("get_setting", pygame.key.get_repeat())
     generate_map()
-    while player.life:
+    while player.life or player.death_tm < 10000:
         dt = clock.tick(FPS)
+        if not player.life:
+            player.death_tm += dt
         for en in enemy_list:
             en.make_move(grid, bombs, explosions, ene_blocks)
         keys = pygame.key.get_pressed()
@@ -313,8 +336,7 @@ def update_bombs(dt):
             exp_temp.clear_sectors(grid)
             explosions.append(exp_temp)
     if player not in enemy_list:
-        pass
-        # player.check_death(explosions)
+        player.check_death(explosions)
     for en in enemy_list:
         en.check_death(explosions)
     for e in explosions:

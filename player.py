@@ -17,6 +17,7 @@ class Player:
     height = 60 * hscale
     coor_xst = 22
     coor_yst = 54
+    death_tm = 0
     speed = 0.08
     
     # 隶属哪一个
@@ -105,8 +106,9 @@ class Player:
     def check_death(self, exp):
         for e in exp:
             for s in e.sectors:
-                if int(self.posX/4) == s[0] and int(self.posY/4) == s[1]:
+                if self.tempx == s[0] and self.tempy == s[1]:
                     self.life = False
+                    self.death_tm = 0
 
     def load(self):
         '''

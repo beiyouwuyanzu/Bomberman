@@ -9,11 +9,14 @@ class Explosion:
         self.time = 300
         self.frame = 0
         self.sectors = []
-
+        self.detail = [[0 for _ in range(20)] for _ in range(20)]
     def explode(self, map, bombs, b):
 
         self.bomber = b.bomber
-        self.sectors.extend(b.sectors)
+        for x, y in b.sectors:
+            self.sectors.append([x, y])
+            self.detail[x][y] = b.detail[x][y]
+        # self.sectors.extend(b.sectors)
         bombs.remove(b)
         self.bomb_chain(bombs, map)
 
