@@ -104,7 +104,7 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
 
     global hello_button
     hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
-                                             text='Say Hello',
+                                             text='大家好 Say Hello',
                                              manager=ui_manager)
 
     global text_input
