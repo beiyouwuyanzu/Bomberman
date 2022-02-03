@@ -1,0 +1,38 @@
+ {
+     "status_bar":
+     {
+         "colours":
+         {
+             "normal_border": "#AAAAAA",
+             "filled_bar": "#f4251b",
+             "unfilled_bar": "#CCCCCC"
+         },
+         "misc":
+         {
+             "follow_sprite_offset": "-5, 32",
+             "border_width": "0"
+         }
+     },
+
+     "text_entry_line":
+     {
+         "colours":
+         {
+             "dark_bg": "#6d736f",
+             "selected_bg": "#55595e",
+             "normal_text": "#c5cbd8",
+             "selected_text": "#FFFFFF",
+             "normal_border": "#000000",
+             "text_cursor": "#000000"
+         },
+
+         "misc":
+         {
+             "shape": "rounded_rectangle",
+             "shape_corner_radius": 5,
+             "border_width": "2",
+             "shadow_width": "2",
+             "padding": "6,4"
+         }
+     }
+ }

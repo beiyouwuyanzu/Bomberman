@@ -7,6 +7,9 @@ from explosion import Explosion
 from enemy import Enemy
 from algorithm import Algorithm
 from spriteManager import  SpriteManager
+import pygame_gui
+from pygame_gui.elements.ui_text_entry_line import UITextEntryLine
+from pygame.rect import Rect
 
 TILE_WIDTH = 40
 TILE_HEIGHT = 40
@@ -18,6 +21,8 @@ BACKGROUND = (177 ,189, 105)
 
 
 s = None
+ui_manager = None
+text_input = None
 FPS = 60
 show_path = True
 
@@ -70,6 +75,8 @@ TEXT_LOSE = font.render('GAME OVER', False, (0, 0, 0))
 TEXT_WIN = font.render('WIN', False, (0, 0, 0))
 
 
+hello_button = None
+
 def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
 
     global TILE_WIDTH
@@ -88,9 +95,20 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     global show_path
     show_path = path
 
-    global s
+
+
+    global s, ui_manager
     s = pygame.display.set_mode((17 * TILE_WIDTH, 13 * TILE_HEIGHT))
+    ui_manager = pygame_gui.UIManager((800, 600), './theme.json')
     pygame.display.set_caption('custom_bomb')
+
+    global hello_button
+    hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
+                                             text='Say Hello',
+                                             manager=ui_manager)
+
+    global text_input
+    text_input = UITextEntryLine(relative_rect=Rect(650, 400, 100, 50),  manager=ui_manager)
 
     global clock
     clock = pygame.time.Clock()
@@ -251,6 +269,8 @@ def draw():
                     for sek in en.path:
                         pygame.draw.rect(s, (255, 0, 255, 240), [sek[0] * TILE_WIDTH, sek[1] * TILE_HEIGHT, TILE_WIDTH, TILE_WIDTH], 1)
 
+    ui_manager.update(10)
+    ui_manager.draw_ui(s)
     pygame.display.update()
 
 
@@ -282,6 +302,9 @@ def main():
         # print(time.time() ,keys)
         temp = player.direction
         movement = False
+
+        
+
         if keys[pygame.K_DOWN]:
             # print(time.time(), "down")
             temp = 0
@@ -310,6 +333,18 @@ def main():
 
         draw()
         for e in pygame.event.get():
+
+            if e.type == pygame_gui.UI_BUTTON_PRESSED:
+              if e.ui_element == hello_button:
+                  print('Hello World!')
+
+
+            if e.type == pygame.USEREVENT:
+                if e.user_type == pygame_gui.UI_TEXT_ENTRY_FINISHED:
+                    if e.ui_element == text_input:
+                        entered_text = e.text
+                        print("input_text", entered_text)
+
             if e.type == pygame.QUIT:
                 sys.exit(0)
             elif e.type == pygame.KEYDOWN:
@@ -321,7 +356,9 @@ def main():
                     grid[temp_bomb.posX][temp_bomb.posY] = 3
                     player.bomb_limit -= 1
 
+            ui_manager.process_events(e)
         update_bombs(dt)
+
     game_over()
 
 

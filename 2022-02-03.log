@@ -1,0 +1,40 @@
+[2022-02-03 12:13:58.128116]Traceback (most recent call last):
+  File ".\server.py", line 95, in recv_data
+    self.deal_data(bytes)
+  File ".\server.py", line 150, in deal_data
+    self.protocol_handler(self, protocol)
+  File ".\server.py", line 182, in __call__
+    protocol_name = protocol['protocol']
+KeyError: 'protocol'
+[2022-02-03 12:14:58.129306]Traceback (most recent call last):
+  File ".\server.py", line 95, in recv_data
+    self.deal_data(bytes)
+  File ".\server.py", line 150, in deal_data
+    self.protocol_handler(self, protocol)
+  File ".\server.py", line 182, in __call__
+    protocol_name = protocol['protocol']
+KeyError: 'protocol'
+[2022-02-03 12:15:24.886518]Traceback (most recent call last):
+  File ".\server.py", line 95, in recv_data
+    self.deal_data(bytes)
+  File ".\server.py", line 150, in deal_data
+    self.protocol_handler(self, protocol)
+  File ".\server.py", line 182, in __call__
+    protocol_name = protocol['protocol']
+KeyError: 'protocol'
+[2022-02-03 12:16:06.872302]Traceback (most recent call last):
+  File ".\server.py", line 95, in recv_data
+    self.deal_data(bytes)
+  File ".\server.py", line 150, in deal_data
+    self.protocol_handler(self, protocol)
+  File ".\server.py", line 182, in __call__
+    protocol_name = protocol['protocol']
+KeyError: 'protocol'
+[2022-02-03 12:22:11.647681]Traceback (most recent call last):
+  File ".\server.py", line 95, in recv_data
+    self.deal_data(bytes)
+  File ".\server.py", line 150, in deal_data
+    self.protocol_handler(self, protocol)
+  File ".\server.py", line 182, in __call__
+    protocol_name = protocol['protocol']
+KeyError: 'protocol'
