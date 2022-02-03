@@ -10,6 +10,7 @@ from spriteManager import  SpriteManager
 import pygame_gui
 from pygame_gui.elements.ui_text_entry_line import UITextEntryLine
 from pygame.rect import Rect
+from client import Client
 
 TILE_WIDTH = 40
 TILE_HEIGHT = 40
@@ -23,6 +24,8 @@ BACKGROUND = (177 ,189, 105)
 s = None
 ui_manager = None
 text_input = None
+text_show = None
+
 FPS = 60
 show_path = True
 
@@ -62,7 +65,7 @@ explosion3_img = None
 spm = None
 bomb_top = None
 
-
+client = None
 
 white = (255,255,255)
 terrain_images = []
@@ -99,16 +102,22 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
 
     global s, ui_manager
     s = pygame.display.set_mode((17 * TILE_WIDTH, 13 * TILE_HEIGHT))
-    ui_manager = pygame_gui.UIManager((800, 600), './theme.json')
+    ui_manager = pygame_gui.UIManager((17 * TILE_WIDTH, 13 * TILE_HEIGHT), './theme.json')
     pygame.display.set_caption('custom_bomb')
 
     global hello_button
-    hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
+    hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((760, 675), (100, 50)),
                                              text='大家好 Say Hello',
                                              manager=ui_manager)
-
     global text_input
-    text_input = UITextEntryLine(relative_rect=Rect(650, 400, 100, 50),  manager=ui_manager)
+    text_input = UITextEntryLine(relative_rect=Rect(750, 600, 200, 50),  manager=ui_manager)
+
+    global text_show 
+    text_show = pygame_gui.elements.ui_text_box.UITextBox(html_text = "消息记录打印",
+        relative_rect = Rect(750, 400, 200, 200), manager = ui_manager)
+
+    global client
+    client = Client(box = text_show)
 
     global clock
     clock = pygame.time.Clock()
@@ -217,9 +226,7 @@ def draw():
         s.blit(bomb_images[x.frame], (x.posX * TILE_WIDTH, x.posY * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
 
     for y in explosions:
-        # for line in y.detail:
-        #     print(line)
-        # print("=" * 10)
+
         for x in y.sectors:
             # s.blit(explosion_images[y.frame], (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
             # print(x[0], x[1])
@@ -269,7 +276,7 @@ def draw():
                     for sek in en.path:
                         pygame.draw.rect(s, (255, 0, 255, 240), [sek[0] * TILE_WIDTH, sek[1] * TILE_HEIGHT, TILE_WIDTH, TILE_WIDTH], 1)
 
-    ui_manager.update(10)
+    ui_manager.update(0.02)
     ui_manager.draw_ui(s)
     pygame.display.update()
 
@@ -342,8 +349,11 @@ def main():
             if e.type == pygame.USEREVENT:
                 if e.user_type == pygame_gui.UI_TEXT_ENTRY_FINISHED:
                     if e.ui_element == text_input:
+                        
                         entered_text = e.text
                         print("input_text", entered_text)
+                        client.send({"chat":entered_text })
+                        text_input.set_text("")
 
             if e.type == pygame.QUIT:
                 sys.exit(0)

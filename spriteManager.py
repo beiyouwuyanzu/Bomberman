@@ -23,7 +23,7 @@ class SpriteManager:
   
     def load_pic(self, path, key, width = 1, height = 1):
         # print(path)
-        print(glob.glob(self.prefix + path))
+        # print(glob.glob(self.prefix + path))
         tmp = []
         for p in sorted(glob.glob(self.prefix + path)):
             img = pygame.image.load(p).convert_alpha()

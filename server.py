@@ -83,6 +83,7 @@ class Connection:
         # 接收数据
         bytes = None
         try:
+            print("start receive data")
             while True:
                 bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
                 if len(bytes) == 0:
