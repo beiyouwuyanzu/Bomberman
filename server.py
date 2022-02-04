@@ -83,7 +83,6 @@ class Connection:
         # 接收数据
         bytes = None
         try:
-            print("start receive data")
             while True:
                 bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
                 if len(bytes) == 0:
@@ -115,6 +114,7 @@ class Player(Connection):
         self.game_data = None  # 玩家游戏中的相关数据
         self.protocol_handler = ProtocolHandler()  # 协议处理对象
         super().__init__(*args)
+        self.name = f"player_{len(self.connections)}"
 
     def deal_data(self, bytes):
         """
@@ -161,9 +161,10 @@ class Player(Connection):
         """
         把这个数据包发送给所有在线玩家，包括自己
         """
+        
         for player in self.connections:
-            if player.login_state:
-                player.send(py_obj)
+            #if player.login_state:
+            player.send(py_obj)
 
     def send_without_self(self, py_obj):
         """
@@ -190,7 +191,13 @@ class ProtocolHandler:
 
     @staticmethod
     def test(player, protocol):
-        print("receive test data:", protocol)
+        protocol['chat'] = f"[{player.name}]{protocol.get('chat')}"
+        Server.write_log(json.dumps(protocol))
+        player.send_all_player(protocol)
+
+    @staticmethod
+    def player_status(player, protocol):
+        Server.write_log(json.dumps(protocol))
 
     @staticmethod
     def cli_login(player, protocol):
@@ -260,4 +267,4 @@ class ProtocolHandler:
 
 
 if __name__ == '__main__':
-    server = Server('127.0.0.1', 6666)
+    server = Server('127.0.0.1', 8666)

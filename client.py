@@ -3,6 +3,7 @@ import json
 import threading
 from threading import Thread
 import datetime
+import uuid
   
 # s = socket.socket()
 # s.connect(('127.0.0.1', 6666))  # 与服务器建立连接
@@ -17,7 +18,23 @@ import datetime
 # input("")
 # s.close()
 
+"""
+设计要发的协议:
+每秒发送10次, 但是每秒刷新60次。 所以要用一个缓存来存取当前一段时间的信息
+需要发送的状态包括:
+	1. 人物的位置
+	2. 人物的朝向
+	3. 人物是否处于移动状态
+	4. 人物放置的糖泡位置
 
+	{
+		"protocol": "player_status",
+		"uid": "xxxxx",
+		"direct": 0\1\2\3,
+		"movement": 0\1,
+		"bombs": [],
+	}
+"""
 def write_log(msg):
     cur_time = datetime.datetime.now()
     s = "[" + str(cur_time) + "]" + msg
@@ -25,17 +42,18 @@ def write_log(msg):
 
 class Client:
 
-	def __init__(self, box, ip = '106.12.165.154', port = 8666 ):
+	# def __init__(self, box, ip = '106.12.165.154', port = 8666 ):
+	def __init__(self, box, ip = '127.0.0.1', port = 8666 ):
 		self.ip = ip 
 		self.port = port 
-
 		self.box = box
 		self.s = socket.socket()
 		self.s.connect((self.ip, self.port))
 		self.listen()
 
 	def send_data(self, data):
-		data["protocol"] = "test"
+		if "protocol" not in data:
+			data["protocol"] = "test"
 		body = (json.dumps(data) + '|#|').encode()
 		self.s.sendall(body)
 
@@ -69,6 +87,9 @@ class Client:
 		thread = Thread(target = self.receive_data)
 		thread.setDaemon(True)
 		thread.start()
+
+	def close(self,):
+		self.s.close()
 
 
 if __name__ == '__main__':

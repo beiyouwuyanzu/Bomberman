@@ -11,6 +11,7 @@ import pygame_gui
 from pygame_gui.elements.ui_text_entry_line import UITextEntryLine
 from pygame.rect import Rect
 from client import Client
+import uuid
 
 TILE_WIDTH = 40
 TILE_HEIGHT = 40
@@ -66,6 +67,7 @@ spm = None
 bomb_top = None
 
 client = None
+bombcache = []
 
 white = (255,255,255)
 terrain_images = []
@@ -134,6 +136,7 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     explosions.clear()
 
     player = Player(W = TILE_WIDTH, H = TILE_HEIGHT)
+    player.uid = str(uuid.uuid1())
 
     if en1_alg is not Algorithm.NONE:
         en1 = Enemy(11, 11, en1_alg)
@@ -248,21 +251,15 @@ def draw():
     text_x = f"x={round(player.posX, 2)}"
     text_y = f"y={round(player.posY, 2)}"
     
-    debug(1, text_x)
-    debug(2, text_y)
+    # debug(1, text_x)
+    # debug(2, text_y)
+    debug(1, f"fps = {str(int(clock.get_fps()))}")
     debug(3, f"locx  = {player.tempx }")
     debug(4, f"locy  = {player.tempy }")
-    debug(5, f"picx={round(player.posX * 10, 2)}")
-    debug(6, f"picy={round(player.posY * 10, 2)}")
+    # debug(5, f"picx={round(player.posX * 10, 2)}")
+    # debug(6, f"picy={round(player.posY * 10, 2)}")
 
     
-
-
-    # text_y = f"y={round(player.posY, 2)}"
-    # largeText = pygame.font.Font('freesansbold.ttf',40)
-    # TextSurf, TextRect = text_objects(text_y, largeText)
-    # TextRect.center = (15 * TILE_WIDTH, 2 * TILE_HEIGHT)
-    # s.blit(TextSurf, TextRect)
 
     for en in enemy_list:
         if en.life:
@@ -299,7 +296,8 @@ def main():
     # pygame.key.set_repeat(1,1)
     # print("get_setting", pygame.key.get_repeat())
     generate_map()
-    while player.life or player.death_tm < 10000:
+    last_send_tm = 0
+    while player.life or player.death_tm < 100000:
         dt = clock.tick(FPS)
         if not player.life:
             player.death_tm += dt
@@ -366,11 +364,34 @@ def main():
                     grid[temp_bomb.posX][temp_bomb.posY] = 3
                     player.bomb_limit -= 1
 
+                    global bombcache
+                    bombcache.append([temp_bomb.posX, temp_bomb.posY])
+
             ui_manager.process_events(e)
         update_bombs(dt)
 
+        # 更新发送数据
+        last_send_tm += dt
+        if last_send_tm > 2000:
+            data = get_update_info(movement)
+            client.send(data)
+            last_send_tm %= 2000
+
+
     game_over()
 
+def get_update_info(movement):
+    data = {}
+    data["protocol"] = "player_status"
+    data["pos"] = [player.posX, player.posY]
+    data["movement"] = movement
+    data["direction"] = player.direction
+    data["uuid"] = player.uid
+    global bombcache 
+    data["bombs"] = bombcache[:]
+    bombcache.clear()
+
+    return data
 
 def update_bombs(dt):
     for b in bombs:
@@ -430,3 +451,4 @@ def game_over():
     explosions.clear()
     enemy_list.clear()
     ene_blocks.clear()
+    client.close()
