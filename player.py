@@ -19,6 +19,8 @@ class Player:
     coor_yst = 54
     death_tm = 0
     speed = 0.08
+    uuid = ""
+    update = False
     
     # 隶属哪一个
     tempx = 1 

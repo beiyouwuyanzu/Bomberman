@@ -67,18 +67,26 @@ spm = None
 bomb_top = None
 
 client = None
+net_delta_time = 50
 bombcache = []
 
 white = (255,255,255)
 terrain_images = []
 bomb_images = []
 explosion_images = []
+online_players = []
 
 pygame.font.init()
 font = pygame.font.SysFont('Bebas', 30)
 TEXT_LOSE = font.render('GAME OVER', False, (0, 0, 0))
 TEXT_WIN = font.render('WIN', False, (0, 0, 0))
 
+mv_mp = {
+    0: (0, 1),
+    1: (1, 0),
+    2: (0, -1),
+    3: (-1, 0),
+}
 
 hello_button = None
 
@@ -118,8 +126,10 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     text_show = pygame_gui.elements.ui_text_box.UITextBox(html_text = "消息记录打印",
         relative_rect = Rect(750, 400, 200, 200), manager = ui_manager)
 
-    global client
+    global client, online_players
     client = Client(box = text_show)
+    client.online_players = online_players
+    client.TILE_SIZE = TILE_WIDTH
 
     global clock
     clock = pygame.time.Clock()
@@ -136,8 +146,10 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     explosions.clear()
 
     player = Player(W = TILE_WIDTH, H = TILE_HEIGHT)
-    player.uid = str(uuid.uuid1())
+    player.uuid = str(uuid.uuid1())
 
+    """
+    临时注释掉bot机器人
     if en1_alg is not Algorithm.NONE:
         en1 = Enemy(11, 11, en1_alg)
         en1.load_animations('1', scale)
@@ -155,6 +167,7 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
         en3.load_animations('3', scale)
         enemy_list.append(en3)
         ene_blocks.append(en3)
+    """
 
     if player_alg is Algorithm.PLAYER:
         player.load_animations(scale)
@@ -244,7 +257,21 @@ def draw():
     else:
         # print(player.death_tm, player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT)
         s.blit(spm.get("status", int(player.death_tm  / 300 % 5)), (player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT))
-        
+    
+
+    for op in online_players:
+        if op.update:
+            s.blit(op.allpic, *op.get_pic_coor())
+            op.update = False
+        else:
+            dx, dy = mv_mp[op.direction]
+            # print(op.direction)
+            # print(dx, dy)
+            # global grid, enemys
+            if op.movement:
+                op.move(dx, dy, grid, enemy_list)
+            s.blit(op.allpic, *op.get_pic_coor())
+
     # print(Player)
 
     # 打印debug文字
@@ -295,7 +322,7 @@ def generate_map():
 def main():
     # pygame.key.set_repeat(1,1)
     # print("get_setting", pygame.key.get_repeat())
-    generate_map()
+    # generate_map()
     last_send_tm = 0
     while player.life or player.death_tm < 100000:
         dt = clock.tick(FPS)
@@ -337,6 +364,8 @@ def main():
             player.frame = (player.frame + 0.1) % 4
 
         draw()
+        # update_online_player()
+        # draw_online_player()
         for e in pygame.event.get():
 
             if e.type == pygame_gui.UI_BUTTON_PRESSED:
@@ -372,13 +401,16 @@ def main():
 
         # 更新发送数据
         last_send_tm += dt
-        if last_send_tm > 2000:
+        if last_send_tm > net_delta_time:
             data = get_update_info(movement)
             client.send(data)
-            last_send_tm %= 2000
+            last_send_tm %= net_delta_time
 
 
     game_over()
+
+# def update_online_player():
+
 
 def get_update_info(movement):
     data = {}
@@ -386,7 +418,7 @@ def get_update_info(movement):
     data["pos"] = [player.posX, player.posY]
     data["movement"] = movement
     data["direction"] = player.direction
-    data["uuid"] = player.uid
+    data["uuid"] = player.uuid
     global bombcache 
     data["bombs"] = bombcache[:]
     bombcache.clear()

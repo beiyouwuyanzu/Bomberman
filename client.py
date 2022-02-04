@@ -4,6 +4,8 @@ import threading
 from threading import Thread
 import datetime
 import uuid
+from player import Player
+
   
 # s = socket.socket()
 # s.connect(('127.0.0.1', 6666))  # 与服务器建立连接
@@ -42,6 +44,8 @@ def write_log(msg):
 
 class Client:
 
+	online_players = []
+	TILE_SIZE = 1
 	# def __init__(self, box, ip = '106.12.165.154', port = 8666 ):
 	def __init__(self, box, ip = '127.0.0.1', port = 8666 ):
 		self.ip = ip 
@@ -55,7 +59,10 @@ class Client:
 		if "protocol" not in data:
 			data["protocol"] = "test"
 		body = (json.dumps(data) + '|#|').encode()
-		self.s.sendall(body)
+		try:
+			self.s.sendall(body)
+		except:
+			self.box.append_html_text("<br>" + "send text failed")
 
 	def send(self, data):
 		threading.Thread(target = self.send_data, args = (data,)).start()
@@ -65,11 +72,14 @@ class Client:
 		try:
 			while True:
 				bytes = self.s.recv(4096)
-				print(bytes.decode())
+				# print(bytes.decode())
 				if len(bytes) == 0:
 					write_log("服务器发送数据为空, 退出")
 					self.s.close()
-				self.deal_data(bytes)
+				try:
+					self.deal_data(bytes)
+				except:
+					Server.write_log("deal_data failed:" + bytes.decode())
 		except:
 			self.s.close()
 			raise
@@ -78,9 +88,20 @@ class Client:
 	def deal_data(self, bytes):
 		info = ""
 		data = bytes.decode().split('|#|')
+		# print("receive：", data)
+		if data:
+			proto = json.loads(data[0]).get('protocol')
+			if proto and hasattr(self, proto):
+				# print(proto)
+				method = getattr(self, proto)
+				result = method(data[0])
+			else:
+				write_log("not match client method" + proto)
+	
+		# 兜底
 		if data:
 			info = json.loads(data[0]).get('chat')
-		if self.box:
+		if self.box and info:
 			self.box.append_html_text("<br>" + info)
 
 	def listen(self,):
@@ -90,6 +111,34 @@ class Client:
 
 	def close(self,):
 		self.s.close()
+
+
+	def player_status(self, data):
+		# print("play_status", data)
+		data = json.loads(data)
+		# 如果当前uuid不在online_players 里面， 增添一名新玩家
+		if not any([x.uuid == data.get("uuid") for x in self.online_players]):
+			# print("not find exist player")
+			tmp_player = Player(self.TILE_SIZE, self.TILE_SIZE)
+			tmp_player.posX, tmp_player.posY = data.get('pos')
+			tmp_player.movement = data.get('movement')
+			tmp_player.direction = data.get('direction')
+			tmp_player.uuid = data.get('uuid')
+
+			self.online_players.append(tmp_player)
+		else:
+			for p in range(len(self.online_players)):
+				if self.online_players[p].uuid == data.get("uuid"):
+			
+					self.online_players[p] = Player(self.TILE_SIZE, self.TILE_SIZE)
+					self.online_players[p].posX, self.online_players[p].posY = data.get('pos')
+					self.online_players[p].movement = data.get('movement')
+					self.online_players[p].direction = data.get('direction')
+					self.online_players[p].uuid = data.get('uuid')
+					self.online_players[p].update = True
+					break
+
+		# print("prase done from online_players")
 
 
 if __name__ == '__main__':

@@ -96,6 +96,7 @@ class Connection:
         except:
             self.socket.close()
             self.connections.remove(self)
+            raise
             Server.write_log('有用户发送的数据异常：' + bytes.decode() + '\n' + '已强制下线，详细原因请查看日志文件')
             Server.write_in_log_file(traceback.format_exc())
 
@@ -155,7 +156,11 @@ class Player(Connection):
         给玩家发送协议包
         py_obj:python的字典或者list
         """
-        self.socket.sendall((json.dumps(py_obj, ensure_ascii=False) + '|#|').encode())
+        try:
+            self.socket.sendall((json.dumps(py_obj, ensure_ascii=False) + '|#|').encode())
+        except:
+            Server.write_log("send data fail, remove self" + self.name)
+            self.connections.remove(self)
 
     def send_all_player(self, py_obj):
         """
@@ -171,7 +176,7 @@ class Player(Connection):
         发送给除了自己的所有在线玩家
         """
         for player in self.connections:
-            if player is not self and player.login_state:
+            if player is not self:
                 player.send(py_obj)
 
 
@@ -197,7 +202,9 @@ class ProtocolHandler:
 
     @staticmethod
     def player_status(player, protocol):
-        Server.write_log(json.dumps(protocol))
+        # Server.write_log(json.dumps(protocol))
+        player.send_without_self(protocol)
+        # print("send all")
 
     @staticmethod
     def cli_login(player, protocol):

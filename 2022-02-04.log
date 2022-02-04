@@ -50,3 +50,43 @@ ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有�
   File ".\server.py", line 87, in recv_data
     bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
 ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-04 18:15:37.791577]Traceback (most recent call last):
+  File ".\server.py", line 87, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-04 18:16:46.330068]Traceback (most recent call last):
+  File ".\server.py", line 87, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-04 18:16:50.150228]Traceback (most recent call last):
+  File ".\server.py", line 87, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-04 18:18:50.908709]Traceback (most recent call last):
+  File ".\server.py", line 87, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-04 18:18:52.877138]Traceback (most recent call last):
+  File ".\server.py", line 87, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-04 18:19:50.820531]Traceback (most recent call last):
+  File ".\server.py", line 95, in recv_data
+    self.deal_data(bytes)
+  File ".\server.py", line 151, in deal_data
+    self.protocol_handler(self, protocol)
+  File ".\server.py", line 189, in __call__
+    result = method(player, protocol)
+  File ".\server.py", line 201, in player_status
+    playe.send_without_self(protocol)
+NameError: name 'playe' is not defined
+[2022-02-04 18:26:59.537803]Traceback (most recent call last):
+  File ".\server.py", line 95, in recv_data
+    self.deal_data(bytes)
+  File ".\server.py", line 151, in deal_data
+    self.protocol_handler(self, protocol)
+  File ".\server.py", line 189, in __call__
+    result = method(player, protocol)
+  File ".\server.py", line 201, in player_status
+    playe.send_without_self(protocol)
+NameError: name 'playe' is not defined
