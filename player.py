@@ -9,14 +9,14 @@ class Player:
     direction = 0
     frame = 0
     animation = []
-    range = 3
+    range = 7
     bomb_limit = 6
     allpic = None
     width = 60
-    hscale = 1.3
+    hscale = 1.5
     height = 60 * hscale
     coor_xst = 22
-    coor_yst = 54
+    coor_yst = 62
     death_tm = 0
     speed = 0.08
     uuid = ""
@@ -40,7 +40,7 @@ class Player:
     def move(self, dx, dy, grid, enemys):
         if self.freeze:
             return
-            
+
         self.tempx = round(self.posX)
         self.tempy = round(self.posY)
 
@@ -76,7 +76,7 @@ class Player:
         if dx == 1:
             if 0.999 > math.modf(self.posX)[0] > 0.5:
                 self.posX += self.speed
-            elif map[self.tempx + 1][self.tempy] == 0:
+            elif self.tempx + 1 < 15 and  map[self.tempx + 1][self.tempy] == 0:
                 self.posX += self.speed
         # left
         elif dx == -1:
@@ -84,7 +84,7 @@ class Player:
                 # print(0 , math.modf(self.posX)[0] , 0.5)
                 self.posX -= self.speed
             # self.tempx = math.ceil(self.posX / 4)
-            elif map[self.tempx - 1][self.tempy] == 0:
+            elif self.tempx - 1 >= 0 and  map[self.tempx - 1][self.tempy] == 0:
                 self.posX -= self.speed
 
         # bottom
@@ -92,7 +92,7 @@ class Player:
             if 0.999 > math.modf(self.posY)[0] > 0.5:
                 # print("bottom", self.posY,  math.modf(self.posY)[0])
                 self.posY += self.speed
-            elif map[self.tempx][self.tempy + 1] == 0:
+            elif self.tempy + 1 < 13 and  map[self.tempx][self.tempy + 1] == 0:
                 self.posY += self.speed
         # top
         elif dy == -1:
@@ -100,7 +100,7 @@ class Player:
             if 0.001 < math.modf(self.posY)[0] < 0.5:
                 # print("top", self.posY ,math.modf(self.posY)[0])
                 self.posY -= self.speed
-            if map[self.tempx][self.tempy - 1] == 0:
+            elif self.tempy - 1 >= 0 and  map[self.tempx][self.tempy - 1] == 0:
                 self.posY -= self.speed
 
         self.tempx = round(self.posX)
@@ -139,7 +139,9 @@ class Player:
         :return:
         '''
         allpic = pygame.image.load("images/hero/huoying.png").convert_alpha()  # 载入整张精灵序列图
-        size = (allpic.get_width(), allpic.get_height() * self.hscale)
+        # 60 -> title_width
+        # self.height -> 1.3tile_width
+        size = (allpic.get_width() * ( self.W / self.width), allpic.get_height() * self.hscale * ( self.W / self.width))
         self.allpic = pygame.transform.scale(allpic, size)
         # print(self.allpic)
         self.allpic_rect = self.allpic.get_rect()  # 获取图片的rect值
@@ -154,8 +156,9 @@ class Player:
 
         mp = [0, 2, 3, 1]
         fm = int(self.frame)
-        return (self.posX * self.W , self.posY * self.H - 24) , (self.coor_xst + fm * 100, 
-            self.coor_yst + 100 * self.hscale * mp[self.direction], self.width, self.height )
+        k = 1.0 * self.W / self.width
+        return (self.posX * self.W , self.posY * self.H - 0.5 * self.H) , (self.coor_xst * k + fm * 100 * k, 
+            self.coor_yst * k + 100 * self.hscale * mp[self.direction] * k, self.width * k, self.height * k )
 
     def load_animations(self, scale):
         front = []

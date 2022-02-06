@@ -36,11 +36,12 @@ class Bomb:
         #     self.frame = 1
 
     def get_range(self, map):
+        # 2 是可以炸的砖块， 3 是炸弹， 1 是墙
         self.detail[self.posX][self.posY] = 0
         self.sectors.append([self.posX, self.posY])
 
         for x in range(1, self.range):
-            if map[self.posX + x][self.posY] == 1:
+            if self.posX + x >= 15 or map[self.posX + x][self.posY] == 1 or map[self.posX + x][self.posY] > 4:
                 if x != 1:
                     self.detail[self.posX  + x - 1][self.posY] = 6
                 break
@@ -55,7 +56,7 @@ class Bomb:
         # self.sectors.append([self.posX + self.range - 1, self.posY])
 
         for x in range(1, self.range):
-            if map[self.posX - x][self.posY] == 1:
+            if self.posX - x < 0 or map[self.posX - x][self.posY] == 1 or map[self.posX - x][self.posY] > 4:
                 if x != 1:
                     self.detail[self.posX - x + 1][self.posY] = 5
                 break
@@ -71,7 +72,7 @@ class Bomb:
         # self.sectors.append([self.posX - self.range + 1, self.posY])
 
         for x in range(1, self.range):
-            if map[self.posX][self.posY + x] == 1:
+            if self.posY + x >= 13 or map[self.posX][self.posY + x] == 1 or map[self.posX][self.posY + x] > 4:
                 if x != 1:
                     self.detail[self.posX][self.posY + x - 1] = 3
                 break
@@ -86,7 +87,7 @@ class Bomb:
         # self.sectors.append([self.posX, self.posY + self.range - 1])
 
         for x in range(1, self.range):
-            if map[self.posX][self.posY - x] == 1:
+            if self.posY -x < 0 or  map[self.posX][self.posY - x] == 1 or map[self.posX][self.posY - x] > 4:
                 if x != 1:
                     self.detail[self.posX][self.posY - x + 1] = 4
                 break

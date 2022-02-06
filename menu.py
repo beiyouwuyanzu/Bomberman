@@ -13,7 +13,7 @@ MENU_TITLE_COLOR = (51, 51, 255)
 
 pygame.display.init()
 INFO = pygame.display.Info()
-TILE_SIZE = int(INFO.current_h * 0.05)
+TILE_SIZE = int(INFO.current_h * 0.04)
 WINDOW_SIZE = (13 * TILE_SIZE, 13 * TILE_SIZE)
 
 clock = None

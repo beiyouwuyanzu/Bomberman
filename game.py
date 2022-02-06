@@ -39,19 +39,28 @@ ene_blocks = []
 bombs = []
 explosions = []
 
-grid = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+grid =[ [0,0,  0,0,0,0,0,0,   0,0,0,0,8],
+        [0,0,  0,0,0,0,0,0,   6,0,0,8,8],
+        [0,0,  0,0,0,0,0,0,   5,0,0,0,8],
+        [0,0,  0,0,6,0,0,6,   5,0,0,8,8],
+        [0,100,0,7,0,0,0,5,   0,0,0,8,0],
+        [0,0,  0,0,0,0,0,0,   5,0,0,0,0],
+        [0,100,0,100,0,0,0, 0,5,0,0,8,8],
+        [5,5,  5,5,6,5,5,6,   0,0,0,8,8],
+        [0,100,0,7,0,0,0,0,   5,0,0,8,0],
+        [0,0,  0,0,0,0,0,0,   5,0,0,0,0],
+        [0,100,0,100,0,0,0, 5,5,0,0,8,8],
+        [0,0,  0,0,6,0,0,6,   0,0,0,0,0],
+        [0,0,  0,0,0,0,0,0,   5,0,0,8,0],
+        [0,0,  0,0,0,0,0,0,   6,0,0,8,8],
+        [0,0,  0,0,0,0,0,0,   0,0,0,0,8]
+]
+
+pic_black = ((1,5), (1,9),
+            (2,4), (2, 5), (2, 6),
+            (2,8), (2, 9), (2, 10),
+            (3,5), (3, 9))
+
 
 grass_img = None
 block_img = None
@@ -68,7 +77,7 @@ spm = None
 bomb_top = None
 
 client = None
-net_delta_time = 1000
+net_delta_time = 100
 bombcache = []
 online_bombs = []
 
@@ -105,7 +114,7 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     # bomb_top = spm.get("bomb_top")
 
     global font
-    font = pygame.font.SysFont('Bebas', scale)
+    font = pygame.font.SysFont('Bebas', int(scale * 0.6))
 
     global show_path
     show_path = path
@@ -113,20 +122,22 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
 
 
     global s, ui_manager
-    s = pygame.display.set_mode((17 * TILE_WIDTH, 13 * TILE_HEIGHT))
-    ui_manager = pygame_gui.UIManager((17 * TILE_WIDTH, 13 * TILE_HEIGHT), './theme.json')
+    s = pygame.display.set_mode((20 * TILE_WIDTH, 13 * TILE_HEIGHT))
+    ui_manager = pygame_gui.UIManager((20 * TILE_WIDTH, 13 * TILE_HEIGHT), './theme.json')
     pygame.display.set_caption('custom_bomb')
 
     global hello_button
-    hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((760, 675), (100, 50)),
+    hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((15.4 * TILE_WIDTH, 12 * TILE_HEIGHT), 
+                (3 * TILE_WIDTH, 0.5 * TILE_HEIGHT)),
                                              text='大家好 Say Hello',
                                              manager=ui_manager)
     global text_input
-    text_input = UITextEntryLine(relative_rect=Rect(750, 600, 200, 50),  manager=ui_manager)
+    text_input = UITextEntryLine(relative_rect=Rect(15.4 * TILE_WIDTH, 11 * TILE_HEIGHT, 4 * TILE_WIDTH, 
+                    1 * TILE_HEIGHT),  manager=ui_manager)
 
     global text_show 
     text_show = pygame_gui.elements.ui_text_box.UITextBox(html_text = "消息记录打印",
-        relative_rect = Rect(750, 400, 200, 200), manager = ui_manager)
+        relative_rect = Rect(15.4 * TILE_WIDTH, 6 * TILE_WIDTH, 4 * TILE_WIDTH, 4 * TILE_HEIGHT), manager = ui_manager)
 
     global client, online_players, online_bombs
     client = Client(box = text_show)
@@ -230,15 +241,19 @@ def text_objects(text, font):
 def debug(row, info):
     largeText = pygame.font.Font('freesansbold.ttf',30)
     TextSurf, TextRect = text_objects(info, largeText)
-    TextRect.center = (15 * TILE_WIDTH, (row) * TILE_HEIGHT)
+    TextRect.center = (17 * TILE_WIDTH, (row) * TILE_HEIGHT)
     s.blit(TextSurf, TextRect)
 
 def draw(dt):
     s.fill(BACKGROUND)
 
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            s.blit(terrain_images[grid[i][j]], (i * TILE_WIDTH, j * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
+    for j in range(len(grid[0])):
+        for i in range(len(grid)):
+            if (j, i) in pic_black:
+                continue
+            img, dxy = spm.get(f"bun_{grid[i][j]}")
+            if img: 
+                s.blit(img, (i * TILE_WIDTH + dxy[0], j * TILE_HEIGHT + dxy[1]))
 
     for x in bombs:
         s.blit(bomb_images[x.frame], (x.posX * TILE_WIDTH, x.posY * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
@@ -246,21 +261,24 @@ def draw(dt):
     for y in explosions:
 
         for x in y.sectors:
-            # s.blit(explosion_images[y.frame], (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
-            # print(x[0], x[1])
-            # print(y.detail)
             s.blit(spm.explore_img(y.detail[x[0]][x[1]], y.frame), (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
     if player.life or 1:
         # print(*player.get_pic_coor())
-        s.blit(player.allpic, *player.get_pic_coor())
-        pygame.draw.rect(s, (198, 226, 255), [player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT - 24, player.width, player.height], 1 )
-        # 给当前任务画框
-        pygame.draw.rect(s, (255, 250, 0, 240), [player.tempx * TILE_WIDTH, player.tempy * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT], 1 )
+        pygame.draw.rect(s, (255, 250, 0, 240), [player.tempx * TILE_WIDTH, player.tempy * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT], 4 )
+        pos, (sx, sy, w, h) = player.get_pic_coor()
+        s.blit(player.allpic, pos, (sx, sy, w, h))
+        # pygame.draw.rect(s, (198, 226, 255), [player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT - 24, player.width, player.height], 1 )
+        # pygame.draw.rect(s, (198, 226, 255), [*pos, w, h], 1 )
+        # 给当前人物画框
+        # pygame.draw.rect(s, (255, 250, 0, 240), [player.tempx * TILE_WIDTH, player.tempy * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT], 1 )
     if player.freeze:
         # print(player.death_tm, player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT)
-        s.blit(spm.get("status", int(player.death_tm  / 300 % 5)), (player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT))
+        pic, dxy = spm.get("status", int(player.death_tm  / 300 % 5))
+        s.blit(pic, (player.posX * TILE_WIDTH + dxy[0], player.posY * TILE_HEIGHT + dxy[1]))
     
 
+    # 画分界线
+    pygame.draw.line(s, (255,228,225), (15 * TILE_WIDTH, 13 * TILE_HEIGHT), (15 * TILE_WIDTH, 0), width=4)
     for op in online_players:
         
         if op.update:
@@ -276,7 +294,8 @@ def draw(dt):
             s.blit(op.allpic, *op.get_pic_coor())
         if op.freeze:
             op.death_tm += dt
-            s.blit(spm.get("status", int(op.death_tm  / 300 % 5)), (op.posX * TILE_WIDTH, op.posY * TILE_HEIGHT))
+            pic, dxy = spm.get("status", int(op.death_tm  / 300 % 5))
+            s.blit(pic, (op.posX * TILE_WIDTH + dxy[0], op.posY * TILE_HEIGHT + dxy[1]))
 
     # print(Player)
 

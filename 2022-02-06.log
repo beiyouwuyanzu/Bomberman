@@ -22,3 +22,331 @@ ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有�
   File ".\server.py", line 96, in recv_data
     bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
 ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 12:37:23.527986]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 12:38:18.044111]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:31:51.516018]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:33:17.121366]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:34:01.306331]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:37:06.693462]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:45:42.494427]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:48:13.752622]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:57:16.649626]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:58:11.106037]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 13:58:42.659084]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:00:48.683908]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:00:55.101884]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:01:22.489778]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:02:26.011023]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:02:56.416585]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:04:04.015573]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:05:18.309769]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:06:25.505875]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:07:49.119963]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:12:05.311175]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:18:46.651729]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:56:52.505397]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 14:57:53.317784]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:02:09.972773]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:05:24.164039]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:09:47.299518]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:11:27.996005]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:13:34.571368]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:14:18.608801]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:15:04.987328]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:16:11.216344]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:22:15.502112]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:23:02.877316]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:28:26.549943]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:29:35.740876]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:32:37.738089]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:36:18.057720]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:38:10.993800]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:39:48.846453]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:40:43.289598]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:42:34.164948]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:43:54.991007]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:47:29.158220]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:49:26.820625]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:50:51.071300]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:51:40.041131]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:52:59.856863]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:53:27.787890]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:54:24.401355]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:54:58.747580]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 15:57:07.232003]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:01:04.377508]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:03:37.877216]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:07:13.190647]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:08:07.499358]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:08:44.261928]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:09:39.604041]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:10:22.095167]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:11:49.684121]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:12:03.474259]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:12:29.578169]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:13:22.915852]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:17:43.343923]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:18:02.106205]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:21:16.803983]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:22:29.617281]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:23:45.483766]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:24:12.920553]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:25:03.417192]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:25:47.027803]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:27:31.263554]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:32:11.532891]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:32:14.097643]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:33:13.219752]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:34:16.092420]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:36:46.574431]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:36:47.403809]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:36:48.577289]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:49:34.864244]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:50:00.223248]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+[2022-02-06 16:51:46.179792]Traceback (most recent call last):
+  File ".\server.py", line 96, in recv_data
+    bytes = self.socket.recv(4096)  # 我们这里只做一个简单的服务端框架，只做粘包不做分包处理。
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。

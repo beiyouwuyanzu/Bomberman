@@ -50,7 +50,7 @@
         "font":
         {
             "name": "heiti",
-            "size": "14",
+            "size": "12",
             "regular_path": "./font/heiti.ttc"
             
         }
@@ -71,7 +71,7 @@
          "font":
         {
             "name": "heiti",
-            "size": "14",
+            "size": "12",
             "regular_path": "./font/heiti.ttc"
             
         },
