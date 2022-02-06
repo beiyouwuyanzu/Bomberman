@@ -11,7 +11,7 @@ class Explosion:
         self.sectors = []
         self.detail = [[0 for _ in range(20)] for _ in range(20)]
     def explode(self, map, bombs, b):
-
+        # print("start explode")
         self.bomber = b.bomber
         for x, y in b.sectors:
             self.sectors.append([x, y])
@@ -19,6 +19,7 @@ class Explosion:
         # self.sectors.extend(b.sectors)
         bombs.remove(b)
         self.bomb_chain(bombs, map)
+        # print("end explode")
 
     def bomb_chain(self, bombs, map):
 
@@ -27,7 +28,8 @@ class Explosion:
                 if x.posX == s[0] and x.posY == s[1]:
 
                     map[x.posX][x.posY] = 0
-                    x.bomber.bomb_limit += 1
+                    if x.bomber:
+                        x.bomber.bomb_limit += 1
                     self.explode(map, bombs, x)
 
     def clear_sectors(self, map):

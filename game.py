@@ -4,6 +4,7 @@ import random
 import time
 from player import Player
 from explosion import Explosion
+from bomb import Bomb
 from enemy import Enemy
 from algorithm import Algorithm
 from spriteManager import  SpriteManager
@@ -67,8 +68,9 @@ spm = None
 bomb_top = None
 
 client = None
-net_delta_time = 50
+net_delta_time = 1000
 bombcache = []
+online_bombs = []
 
 white = (255,255,255)
 terrain_images = []
@@ -126,7 +128,7 @@ def game_init(path, player_alg, en1_alg, en2_alg, en3_alg, scale):
     text_show = pygame_gui.elements.ui_text_box.UITextBox(html_text = "消息记录打印",
         relative_rect = Rect(750, 400, 200, 200), manager = ui_manager)
 
-    global client, online_players
+    global client, online_players, online_bombs
     client = Client(box = text_show)
     client.online_players = online_players
     client.TILE_SIZE = TILE_WIDTH
@@ -231,7 +233,7 @@ def debug(row, info):
     TextRect.center = (15 * TILE_WIDTH, (row) * TILE_HEIGHT)
     s.blit(TextSurf, TextRect)
 
-def draw():
+def draw(dt):
     s.fill(BACKGROUND)
 
     for i in range(len(grid)):
@@ -248,18 +250,19 @@ def draw():
             # print(x[0], x[1])
             # print(y.detail)
             s.blit(spm.explore_img(y.detail[x[0]][x[1]], y.frame), (x[0] * TILE_WIDTH, x[1] * TILE_HEIGHT, TILE_HEIGHT, TILE_WIDTH))
-    if player.life:
+    if player.life or 1:
         # print(*player.get_pic_coor())
         s.blit(player.allpic, *player.get_pic_coor())
         pygame.draw.rect(s, (198, 226, 255), [player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT - 24, player.width, player.height], 1 )
         # 给当前任务画框
         pygame.draw.rect(s, (255, 250, 0, 240), [player.tempx * TILE_WIDTH, player.tempy * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT], 1 )
-    else:
+    if player.freeze:
         # print(player.death_tm, player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT)
         s.blit(spm.get("status", int(player.death_tm  / 300 % 5)), (player.posX * TILE_WIDTH, player.posY * TILE_HEIGHT))
     
 
     for op in online_players:
+        
         if op.update:
             s.blit(op.allpic, *op.get_pic_coor())
             op.update = False
@@ -271,6 +274,9 @@ def draw():
             if op.movement:
                 op.move(dx, dy, grid, enemy_list)
             s.blit(op.allpic, *op.get_pic_coor())
+        if op.freeze:
+            op.death_tm += dt
+            s.blit(spm.get("status", int(op.death_tm  / 300 % 5)), (op.posX * TILE_WIDTH, op.posY * TILE_HEIGHT))
 
     # print(Player)
 
@@ -328,6 +334,12 @@ def main():
         dt = clock.tick(FPS)
         if not player.life:
             player.death_tm += dt
+
+        if player.death_tm > 10000:
+            player.life = True 
+            player.death_tm = 0 
+            player.freeze = False
+
         for en in enemy_list:
             en.make_move(grid, bombs, explosions, ene_blocks)
         keys = pygame.key.get_pressed()
@@ -362,8 +374,17 @@ def main():
             player.direction = temp
         if movement:
             player.frame = (player.frame + 0.1) % 4
+        player.movement = movement
 
-        draw()
+        # 更新线上的炸弹
+        if client.online_bombs:
+            # print("online_bombs:", client.online_bombs)
+            for r, x, y in client.online_bombs:
+                bombs.append(plant_bomb(r, x, y))
+            client.online_bombs = []
+
+
+        draw(dt)
         # update_online_player()
         # draw_online_player()
         for e in pygame.event.get():
@@ -394,7 +415,7 @@ def main():
                     player.bomb_limit -= 1
 
                     global bombcache
-                    bombcache.append([temp_bomb.posX, temp_bomb.posY])
+                    bombcache.append([temp_bomb.range, temp_bomb.posX, temp_bomb.posY])
 
             ui_manager.process_events(e)
         update_bombs(dt)
@@ -402,7 +423,11 @@ def main():
         # 更新发送数据
         last_send_tm += dt
         if last_send_tm > net_delta_time:
-            data = get_update_info(movement)
+            data = player.dump_status()
+            data["bombs"] = bombcache[:]
+            bombcache.clear()
+            # data = get_update_info(movement)
+
             client.send(data)
             last_send_tm %= net_delta_time
 
@@ -412,24 +437,34 @@ def main():
 # def update_online_player():
 
 
-def get_update_info(movement):
-    data = {}
-    data["protocol"] = "player_status"
-    data["pos"] = [player.posX, player.posY]
-    data["movement"] = movement
-    data["direction"] = player.direction
-    data["uuid"] = player.uuid
-    global bombcache 
-    data["bombs"] = bombcache[:]
-    bombcache.clear()
+# def get_update_info(movement):
+#     data = {}
+#     data["protocol"] = "player_status"
+#     data["pos"] = [player.posX, player.posY]
+#     data["movement"] = movement
+#     data["direction"] = player.direction
+#     data["uuid"] = player.uuid
+#     global bombcache 
+#     data["bombs"] = bombcache[:]
+#     bombcache.clear()
 
-    return data
+#     return data
+
+def plant_bomb(r, x, y):
+    b = Bomb(r, x, y, grid, None, time.time() * 1000)
+    grid[x][y] = 3
+    return b
 
 def update_bombs(dt):
+    # st = False
+    # if bombs:
+    #     print("update start bomb")
+    # st = True
     for b in bombs:
         b.update(dt)
         if b.time < 1:
-            b.bomber.bomb_limit += 1
+            if b.bomber:
+                b.bomber.bomb_limit += 1
             grid[b.posX][b.posY] = 0
             exp_temp = Explosion(b.posX, b.posY, b.range)
             exp_temp.explode(grid, bombs, b)
@@ -443,6 +478,8 @@ def update_bombs(dt):
         e.update(dt)
         if e.time < 1:
             explosions.remove(e)
+    # if st:
+    #     print("update bomb end")
 
 
 def game_over():

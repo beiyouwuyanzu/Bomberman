@@ -21,6 +21,8 @@ class Player:
     speed = 0.08
     uuid = ""
     update = False
+    freeze = False
+    movement = True
     
     # 隶属哪一个
     tempx = 1 
@@ -36,6 +38,9 @@ class Player:
         self.load()
 
     def move(self, dx, dy, grid, enemys):
+        if self.freeze:
+            return
+            
         self.tempx = round(self.posX)
         self.tempy = round(self.posY)
 
@@ -110,7 +115,20 @@ class Player:
             for s in e.sectors:
                 if self.tempx == s[0] and self.tempy == s[1]:
                     self.life = False
+                    self.freeze = True
                     self.death_tm = 0
+
+    def dump_status(self, ):
+        data = {}
+        data["protocol"] = "player_status"
+        data["pos"] = [self.posX, self.posY]
+        data["movement"] = self.movement
+        data["direction"] = self.direction
+        data["uuid"] = self.uuid
+        data["life"] = self.life
+        data["freeze"] = self.freeze
+
+        return data
 
     def load(self):
         '''

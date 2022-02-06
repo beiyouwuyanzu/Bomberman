@@ -50,6 +50,9 @@ class Server:
             user = self.__user_cls(client, self.connections)
             self.connections.append(user)
             self.write_log('有新连接进入，当前连接数：{}'.format(len(self.connections)))
+            data = {}
+            data["chat"] = f"连接成功,当前一共{len(self.connections)}名玩家"
+            self.connections[0].send_all_player(data)
 
     @classmethod
     def register_cls(cls, sub_cls):
@@ -79,6 +82,12 @@ class Connection:
         thread.setDaemon(True)
         thread.start()
 
+
+    def boardcast(self, text):
+        data = {"chat": "[广播]" + text}
+        if self.connections:
+            self.connections[0].send_all_player(data)
+
     def recv_data(self):
         # 接收数据
         bytes = None
@@ -90,15 +99,16 @@ class Connection:
                     self.socket.close()
                     # 删除连接
                     self.connections.remove(self)
+                    self.boardcast("有一名玩家离线")
                     break
                 # 处理数据
                 self.deal_data(bytes)
         except:
             self.socket.close()
             self.connections.remove(self)
-            raise
             Server.write_log('有用户发送的数据异常：' + bytes.decode() + '\n' + '已强制下线，详细原因请查看日志文件')
             Server.write_in_log_file(traceback.format_exc())
+            self.boardcast("有一名玩家状态异常，已强制离线")
 
     def deal_data(self, bytes):
         """
@@ -159,6 +169,7 @@ class Player(Connection):
         try:
             self.socket.sendall((json.dumps(py_obj, ensure_ascii=False) + '|#|').encode())
         except:
+            raise
             Server.write_log("send data fail, remove self" + self.name)
             self.connections.remove(self)
 

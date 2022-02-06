@@ -44,6 +44,7 @@ def write_log(msg):
 
 class Client:
 
+	online_bombs = []
 	online_players = []
 	TILE_SIZE = 1
 	# def __init__(self, box, ip = '106.12.165.154', port = 8666 ):
@@ -79,7 +80,8 @@ class Client:
 				try:
 					self.deal_data(bytes)
 				except:
-					Server.write_log("deal_data failed:" + bytes.decode())
+					raise
+					print("deal_data failed:" + bytes.decode())
 		except:
 			self.s.close()
 			raise
@@ -90,13 +92,18 @@ class Client:
 		data = bytes.decode().split('|#|')
 		# print("receive：", data)
 		if data:
+			# print(data)
+			# print(data[0])
+			# print(json.loads(data[0]))
+			# print(type(json.loads(data[0])))
 			proto = json.loads(data[0]).get('protocol')
 			if proto and hasattr(self, proto):
 				# print(proto)
 				method = getattr(self, proto)
 				result = method(data[0])
 			else:
-				write_log("not match client method" + proto)
+				pass
+				# write_log("not match client method" + proto)
 	
 		# 兜底
 		if data:
@@ -124,18 +131,23 @@ class Client:
 			tmp_player.movement = data.get('movement')
 			tmp_player.direction = data.get('direction')
 			tmp_player.uuid = data.get('uuid')
-
+			tmp_player.life = data.get("life")
+			tmp_player.freeze = data.get("freeze")
+			tmp_player.update = True
+			self.online_bombs.extend(data.get('bombs'))
 			self.online_players.append(tmp_player)
 		else:
 			for p in range(len(self.online_players)):
 				if self.online_players[p].uuid == data.get("uuid"):
-			
 					self.online_players[p] = Player(self.TILE_SIZE, self.TILE_SIZE)
 					self.online_players[p].posX, self.online_players[p].posY = data.get('pos')
 					self.online_players[p].movement = data.get('movement')
 					self.online_players[p].direction = data.get('direction')
 					self.online_players[p].uuid = data.get('uuid')
+					self.online_players[p].life = data.get("life")
+					self.online_players[p].freeze = data.get("freeze")
 					self.online_players[p].update = True
+					self.online_bombs.extend(data.get('bombs'))
 					break
 
 		# print("prase done from online_players")
